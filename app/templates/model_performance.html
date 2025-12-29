@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Performance</title>
+</head>
+<body>
+    <h1>Model Performance History</h1>
+
+    {% if records %}
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Model Name</th>
+                <th>Version</th>
+                <th>Last Trained</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall</th>
+            </tr>
+
+            {% for row in records %}
+            <tr>
+                <td>{{ row.model_name }}</td>
+                <td>{{ row.model_version }}</td>
+                <td>{{ row.trained_on }}</td>
+                <td>{{ "%.3f"|format(row.accuracy) }}</td>
+                <td>{{ "%.3f"|format(row.precision) }}</td>
+                <td>{{ "%.3f"|format(row.recall) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No model metrics found.</p>
+    {% endif %}
+
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

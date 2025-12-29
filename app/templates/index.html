@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Titanic Survival Predictor</title>
+</head>
+<body>
+    <h1>Titanic Survival Predictor</h1>
+
+    <form method="POST">
+        <label>Passenger Class:</label>
+        <select name="Pclass" required>
+            <option value="1">1st Class</option>
+            <option value="2">2nd Class</option>
+            <option value="3">3rd Class</option>
+        </select>
+        <br><br>
+
+        <label>Sex:</label>
+        <select name="Sex" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <br><br>
+
+        <label>Age:</label>
+        <input type="number" name="Age" step="0.1" required>
+        <br><br>
+
+        <label>Fare:</label>
+        <input type="number" name="Fare" step="0.01" required>
+        <br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+    <br>
+<a href="/models">View Model Performance</a>
+</body>
+</html>
