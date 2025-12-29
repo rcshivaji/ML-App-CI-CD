@@ -1,2 +1,15 @@
-venv
-__pycache__
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local raw data (S3 is source of truth)
+data/raw/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store

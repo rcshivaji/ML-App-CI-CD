@@ -1,0 +1,2 @@
+model_name,model_version,trained_on,accuracy,precision,recall
+LogisticRegression,v1,30/12/2025,0.7877094972067039,0.746031746031746,0.6811594202898551
