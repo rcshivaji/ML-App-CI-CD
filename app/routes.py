@@ -9,6 +9,7 @@ main = Blueprint("main", __name__)
 def home():
     if request.method == "POST":
         input_data = {
+            "Name": request.form["Name"],
             "Pclass": int(request.form["Pclass"]),
             "Sex": request.form["Sex"],
             "Age": float(request.form["Age"]),
@@ -26,6 +27,7 @@ def home():
 
         return render_template(
             "result.html",
+            name= input_data["Name"],
             prediction=prediction,
             probability=round(probability * 100, 2)
         )
