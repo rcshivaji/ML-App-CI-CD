@@ -1,36 +1,18 @@
 import joblib
-from pathlib import Path
 import pandas as pd
-from src.preprocessing.preprocess import preprocess_data
+from pathlib import Path
 
-# Resolve project root
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ACTIVE_MODEL_PATH = PROJECT_ROOT / "models" / "active" / "model.pkl"
 
-MODEL_PATH = PROJECT_ROOT / "models" / "active" / "model_v1.pkl"
-SCALER_PATH = PROJECT_ROOT / "models" / "active" / "scaler_v1.pkl"
+def load_model():
+    return joblib.load(ACTIVE_MODEL_PATH)
 
-def load_artifacts():
-    """
-    Load trained model and scaler from disk.
-    This should be called once at app startup.
-    """
-    model = joblib.load(MODEL_PATH)
-    scaler = joblib.load(SCALER_PATH)
-    return model, scaler
-
-def predict_survival(input_data: dict, model, scaler):
-    """
-    Predict survival and probability for a single passenger.
-    """
+def predict_survival(input_data: dict, model):
     df = pd.DataFrame([input_data])
+    df = df.drop(df.columns[0], axis=1)
 
-    X, _, _ = preprocess_data(
-        df,
-        fit=False,
-        scaler=scaler
-    )
-
-    prediction = model.predict(X)[0]
-    probability = model.predict_proba(X)[0][1]
+    prediction = model.predict(df)[0]
+    probability = model.predict_proba(df)[0][1]
 
     return int(prediction), float(probability)

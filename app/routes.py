@@ -17,12 +17,9 @@ def home():
         }
 
         model = current_app.config["MODEL"]
-        scaler = current_app.config["SCALER"]
-
         prediction, probability = predict_survival(
             input_data,
-            model,
-            scaler
+            model
         )
 
         return render_template(
