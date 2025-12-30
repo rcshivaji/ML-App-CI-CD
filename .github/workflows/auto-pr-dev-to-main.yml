@@ -1,0 +1,34 @@
+name: Auto PR - Dev to Main
+
+on:
+  workflow_run:
+    workflows: ["CI - Dev Branch"]
+    types:
+      - completed
+
+jobs:
+  create-pr:
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'dev'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request (dev → main)
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          head: dev
+          title: "Auto PR: Dev → Main"
+          body: |
+            ✅ CI passed successfully on dev.
+
+            This PR was automatically created.
+            Please review before merging.
+          labels: |
+            automated
+            needs-review
