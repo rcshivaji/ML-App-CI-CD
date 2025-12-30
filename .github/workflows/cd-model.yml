@@ -1,0 +1,34 @@
+name: CD - Model Promotion
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "models/candidates/**"
+
+jobs:
+  promote-model:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Promote model on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/ML-App-CI-CD
+            git pull origin main
+
+            # Detect latest candidate model
+            MODEL=$(ls models/candidates | sort | tail -n 1)
+
+            echo "Promoting model: $MODEL"
+
+            python scripts/promote_model.py --candidate $MODEL
+
+            sudo systemctl restart titanicml
