@@ -135,7 +135,7 @@ def train_models():
     rf_pipeline = Pipeline([
         ("preprocessing", rf_preprocessor),
         ("model", RandomForestClassifier(
-            n_estimators=200,
+            n_estimators=400,
             max_depth=8,
             random_state=42
         ))
@@ -144,7 +144,7 @@ def train_models():
     rf_pipeline.fit(X_train, y_train)
     y_pred_rf = rf_pipeline.predict(X_test)
 
-    joblib.dump(rf_pipeline, f"{MODELS_DIR}/model_rf_v2.pkl")
+    joblib.dump(rf_pipeline, f"{MODELS_DIR}/model_rf_v3.pkl")
     log_metrics("RandomForest", "v2", y_test, y_pred_rf)
 
     print("✅ Training completed successfully")
